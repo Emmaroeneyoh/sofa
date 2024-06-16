@@ -10,11 +10,18 @@ const router = require("express").Router();
 
 router.post(
   "/create/product",
-  upload.single('productfile'),
-    adminValidation,
+  // upload.single('productfile'),
+  createProductValidation,
   admin_check_token,
-  adminpublishproductController
+  createProductController
 );
+// router.post(
+//   "/create/product",
+//   upload.single('productfile'),
+//     adminValidation,
+//   admin_check_token,
+//   adminpublishproductController
+// );
 router.post(
   "/retrieve/all/product",
   retrieveallproductValidation ,

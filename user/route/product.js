@@ -1,4 +1,5 @@
-const { userretriveallproductController, userretrivesingleproductController } = require("../app/controller/product");
+const { adminValidation } = require("../../admin/core/validation/auth");
+const { userretriveallproductController, userretrivesingleproductController, userretrivecategoryController, userdashboardController } = require("../app/controller/product");
 const { user_check_token } = require("../core/authorization");
 const { userValidation } = require("../core/validation/auth");
 const { usersingleproductValidation } = require("../core/validation/product");
@@ -17,6 +18,16 @@ router.post(
   usersingleproductValidation,
   // user_check_token,
   userretrivesingleproductController
+);
+router.post(
+  "/retrieve/category",
+  userretrivecategoryController
+);
+router.post(
+  "/dashboard",
+  userValidation,
+  user_check_token,
+  userdashboardController
 );
 
 module.exports = router

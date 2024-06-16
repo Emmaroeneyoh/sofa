@@ -1,33 +1,30 @@
-const { CategoryModel } = require("../core/db/category");
+const { subcategoryModel } = require("../core/db/subcategory");
 const { handleError } = require("../core/utils");
-const {
-  createcategoryModel,
-  updatecategoryModel,
-} = require("../model/category");
+const { createsubcategoryModel } = require("../model/subcategory");
 
 
 
-const createcategoryController = async (req, res, next) => {
-  const {  category , categoryurl} = req.body;
+
+const createsubcategoryController = async (req, res, next) => {
+  const {  subcategory , category} = req.body;
   const categoryname = category.toLowerCase();
   try {
-    const cat = await CategoryModel.findOne({ category: categoryname });
-    if (cat) {
-      return res.status(400).json({
-        status_code: 400,
-        status: false,
-        message: "category already exist",
-        data: [],
-        error: "category already exist",
-      });
-    }
+    // const cat = await CategoryModel.findOne({ category: categoryname });
+    // if (cat) {
+    //   return res.status(400).json({
+    //     status_code: 400,
+    //     status: false,
+    //     message: "category already exist",
+    //     data: [],
+    //     error: "category already exist",
+    //   });
+    // }
 
     const data = {
-      categoryname,
-       categoryurl
+        subcategory , category
     };
 
-    let trainee = await createcategoryModel(data, res);
+    let trainee = await createsubcategoryModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -40,10 +37,10 @@ const createcategoryController = async (req, res, next) => {
   }
 };
 
-const retrievesinglecategoryController = async (req, res, next) => {
-  const { categoryid } = req.body;
+const retrievesinglesubcategoryController = async (req, res, next) => {
+  const { subcategoryid } = req.body;
   try {
-    const cat = await CategoryModel.findById(categoryid);
+    const cat = await subcategoryModel.findById(subcategoryid);
 
     return res.status(200).json({
       status_code: 200,
@@ -57,9 +54,10 @@ const retrievesinglecategoryController = async (req, res, next) => {
   }
 };
 
-const retrieveallcategoryController = async (req, res, next) => {
-  try {
-    const cat = await CategoryModel.find();
+const retrieveallsubcategoryController = async (req, res, next) => {
+    try {
+      const {category}  = req.body
+    const cat = await subcategoryModel.find({category});
 
     return res.status(200).json({
       status_code: 200,
@@ -73,7 +71,7 @@ const retrieveallcategoryController = async (req, res, next) => {
   }
 };
 
-const updatecategoryController = async (req, res, next) => {
+const updatesubcategoryController = async (req, res, next) => {
   const { category_description, category, categoryid , categoryurls } = req.body;
   const categoryname = category.toLowerCase();
   try {
@@ -109,8 +107,8 @@ const updatecategoryController = async (req, res, next) => {
 };
 
 module.exports = {
-  createcategoryController,
-  updatecategoryController,
-  retrieveallcategoryController,
-  retrievesinglecategoryController,
+  createsubcategoryController,
+  updatesubcategoryController,
+  retrieveallsubcategoryController,
+  retrievesinglesubcategoryController,
 };

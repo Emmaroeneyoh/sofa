@@ -49,9 +49,9 @@ const createProductValidation = (req, res, next) => {
   const schema = joi.object({
     adminid: joi.string().required(),
     productname: joi.string().required(),
-    category: joi.array().required(),
+    category: joi.string().required(),
     productprice: joi.number().required(),
-    subcategory: joi.array().required().optional(),
+    subcategory: joi.string().required().optional(),
     variants: joi.array().optional(),
     recommended: joi.array().optional(),
     coverimage: joi.string().required(),

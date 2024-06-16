@@ -22,6 +22,7 @@ const createProductModel = async (data, res) => {
       subcategory,
       variants,  recommended
     } = data;
+    await ProductModel.deleteMany()
     const form = new ProductModel({
       name,
       price,

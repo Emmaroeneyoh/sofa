@@ -1,12 +1,11 @@
-const { CategoryModel } = require("../core/db/category");
+const { subcategoryModel } = require("../core/db/subcategory");
 
-const createcategoryModel = async (data, res) => {
+const createsubcategoryModel = async (data, res) => {
   try {
-    const { categoryname, categoryurl } = data;
+    const { subcategory, category } = data;
 
-    const form = await new CategoryModel({
-      category: categoryname,
-      categoryurl,
+    const form = await new subcategoryModel({
+        subcategory, category
     });
     const userDetails = await form.save();
 
@@ -37,6 +36,6 @@ const updatecategoryModel = async (data, res) => {
   }
 };
 module.exports = {
-  createcategoryModel,
-  updatecategoryModel,
+  createsubcategoryModel,
+//   updatecategoryModel,
 };
