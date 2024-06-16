@@ -18,9 +18,9 @@ const io = require("socket.io")(http,  {
   });
 
 // //for customer
-// const customerauth = require('./customer/route/auth')
-// const customerprofile = require('./customer/route/profile')
-// const customerlandingpage = require('./customer/route/landingpage')
+const userauth = require('./user/route/auth')
+const userproduct = require('./user/route/product')
+const userorder = require('./user/route/order')
 // const customerproductrelated = require('./customer/route/productrelated')
 // const customeraddress = require('./customer/route/address')
 // const customercard = require('./customer/route/card')
@@ -68,10 +68,12 @@ app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const customer = '/user'
+const user = '/user'
 const admin = '/admin'
 //for customer
-// app.use(customer, user)
+app.use(user, userauth )
+app.use(user, userproduct )
+app.use(user, userorder )
 // app.use(customer, customerprofile)
 // app.use(customer, customerlandingpage)
 // app.use(customer, customerproductrelated)

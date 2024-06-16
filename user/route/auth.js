@@ -1,66 +1,24 @@
-const {
-  CustomerSignupController, 
-  CustomerLoginController,
-  CustomerresetPassword,
-  CustomerNewPasswordLink,
-  mobilecustomerNewPasswordLink,
-  mobilecustomerresetPassword,
-  Customerconfirmemail,
-  Customersendconfirmemailcontroller,
-  Customerconfirmemailcontroller,
-} = require("../controller/auth");
-const { customeraddwaitlistController } = require("../controller/wishlist");
-const {
-  customersignupValidation,
-  customerLoginValidation,
-  customerforgotpasswordValidation,
-  customerResetpasswordValidation,
-  mobilecustomerResetpasswordValidation,
-  customerconfirmemailValidation,
-  customercheckemailValidation,
-} = require("../core/validation/auth");
-const { customerwaitlistValidation } = require("../core/validation/wishlist");
+const { contactusCONTROLLER, contactus2CONTROLLER } = require("../app/controller");
+const { userSignupController, userLoginController, userNewPasswordLink, userresetPassword } = require("../app/controller/auth");
+const { contactusValidation, contactus2Validation } = require("../core/validation");
+const { usersignupValidation, userLoginValidation, userforgotpasswordValidation, userResetpasswordValidation } = require("../core/validation/auth");
+
 
 const router = require("express").Router();
 
-router.post("/signup", customersignupValidation, CustomerSignupController);
-router.post("/login", customerLoginValidation, CustomerLoginController);
-router.post(
-  "/forgot/password",
-  customerforgotpasswordValidation,
-  CustomerNewPasswordLink
-);
-router.post(
-  "/mobile/forgot/password",
-  customerforgotpasswordValidation,
-  mobilecustomerNewPasswordLink
-);
-router.post(
-  "/mobile/reset/password",
-    mobilecustomerResetpasswordValidation,
-  mobilecustomerresetPassword
-);
-router.post(
-  "/reset/password",
-  customerResetpasswordValidation,
-  CustomerresetPassword
-);
-router.post(
-  "/send/email",
-  customerconfirmemailValidation,
-  Customersendconfirmemailcontroller
-);
-router.post(
-  "/check/email",
-  customercheckemailValidation,
-  Customerconfirmemailcontroller
-);
+router.post("/signup", usersignupValidation, userSignupController);
+router.post("/login",  userLoginValidation, userLoginController);
+router.post("/forgot/password", userforgotpasswordValidation, userNewPasswordLink);
+router.post("/reset/password", userResetpasswordValidation, userresetPassword);
 
-//waitlist
-router.post(
-  "/waitlist",
-  customerwaitlistValidation,
-  customeraddwaitlistController
-);
 
-module.exports = router;
+// //contact us
+// router.post("/contactus", contactusValidation, contactusCONTROLLER);
+// router.post("/contactus2", contactus2Validation, contactus2CONTROLLER);
+
+
+
+
+
+
+module.exports = router

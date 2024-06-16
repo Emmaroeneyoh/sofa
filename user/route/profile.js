@@ -1,64 +1,28 @@
-const { Customerretrievetemaplate } = require("../../helper/email");
-const {
-  CustomerupdateprofileController,
-  CustomerupdatepasswordController,
-  CustomerretrieveprofileController,
-  CustomerupdatephotoController,
-  customerdeleterrequestController,
-  customerdashboardController,
-} = require("../controller/profile");
-const { customer_check_token } = require("../core/authorization");
-const { customerValidation } = require("../core/validation/auth");
-const {
-  customerupdateprofileValidation,
-  customerupdatepasswordValidation,
-  customerretrieveprofileValidation,
-  customerupdatephotoValidation,
-  customerdeleteaccoutnValidation,
-} = require("../core/validation/profile");
+const { userretrieveprofileController, userupdatepasswordController, userupdateprofileController } = require("../app/controller/profile");
+const { user_check_token } = require("../core/authorization");
+const { userValidation } = require("../core/validation/auth");
+const { userupdatepasswordValidation, userupdateprofileValidation } = require("../core/validation/profile");
+
 
 const router = require("express").Router();
 
 router.post(
-  "/update/profile",
-  customer_check_token,
-  customerupdateprofileValidation,
-  CustomerupdateprofileController
+  "/retrieve/profile",
+  userValidation,
+  user_check_token,
+  userretrieveprofileController
 );
 router.post(
   "/update/password",
-  customer_check_token,
-  customerupdatepasswordValidation,
-  CustomerupdatepasswordController
+  userupdatepasswordValidation,
+  user_check_token,
+  userupdatepasswordController
 );
 router.post(
-  "/retrieve/profile",
-  customer_check_token,
-  customerretrieveprofileValidation,
-  CustomerretrieveprofileController
-);
-router.post(
-  "/update/photo",
-  customer_check_token,
-  customerupdatephotoValidation,
-  CustomerupdatephotoController
-);
-router.post(
-  "/dashboard",
-  customerValidation,
-  customer_check_token,
- 
-  customerdashboardController
-);
-router.post(
-  "/delete/account",
-  customerdeleteaccoutnValidation,
-  customerdeleterrequestController
-);
-
-router.get(
-  "/template",
-  Customerretrievetemaplate
+  "/update/profile",
+  userupdateprofileValidation,
+  user_check_token,
+  userupdateprofileController
 );
 
 module.exports = router;
