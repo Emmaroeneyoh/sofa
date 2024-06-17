@@ -5,10 +5,8 @@ const {
   updatecategoryModel,
 } = require("../model/category");
 
-
-
 const createcategoryController = async (req, res, next) => {
-  const {  category , categoryurl} = req.body;
+  const { category, categoryurl } = req.body;
   const categoryname = category.toLowerCase();
   try {
     const cat = await CategoryModel.findOne({ category: categoryname });
@@ -24,7 +22,7 @@ const createcategoryController = async (req, res, next) => {
 
     const data = {
       categoryname,
-       categoryurl
+      categoryurl,
     };
 
     let trainee = await createcategoryModel(data, res);
@@ -56,7 +54,56 @@ const retrievesinglecategoryController = async (req, res, next) => {
     handleError(error.message);
   }
 };
+const deletecategoryController = async (req, res, next) => {
+  const { categoryid } = req.body;
+  try {
+    const cat = await CategoryModel.findByIdAndDelete(categoryid);
 
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: cat,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message);
+  }
+};
+
+const updatecategoryController = async (req, res, next) => {
+  const { category, categoryid, categoryurl } = req.body;
+  const ncategory = category.toLowerCase();
+  // const sellercategory = await CategoryModel.findOne({
+  //   category: ncategory,
+  // });
+  //   if (sellercategory) {
+  //     return res.status(400).json({
+  //       status_code: 400,
+  //       status: false,
+  //       message: "category already exist",
+  //       error: "category already exist",
+  //     });
+  //   }
+
+  try {
+    const form = await CategoryModel.findByIdAndUpdate(categoryid, {
+      $set: {
+          categoryurl, category : ncategory
+      },
+    });
+
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+     
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 const retrieveallcategoryController = async (req, res, next) => {
   try {
     const cat = await CategoryModel.find();
@@ -73,44 +120,11 @@ const retrieveallcategoryController = async (req, res, next) => {
   }
 };
 
-const updatecategoryController = async (req, res, next) => {
-  const { category_description, category, categoryid , categoryurls } = req.body;
-  const categoryname = category.toLowerCase();
-  try {
-      const cat = await CategoryModel.findOne({category:categoryname});
-    if (cat) {
-        if (cat.category != categoryname) {
-            return res.status(200).json({
-              status_code: 400,
-              status: true,
-              message: "category already exist",
-              error: "category already exist",
-            });
-          }
-    }
-
-    const data = {
-      category_description,
-      categoryname, categoryurls ,
-      categoryid,
-    };
-
-    let trainee = await updatecategoryModel(data, res);
-    return res.status(200).json({
-      status_code: 200,
-      status: true,
-      message: "signup process successful",
-      data: trainee,
-    });
-  } catch (error) {
-    console.log(error);
-    handleError(error.message);
-  }
-};
 
 module.exports = {
   createcategoryController,
   updatecategoryController,
+  deletecategoryController,
   retrieveallcategoryController,
   retrievesinglecategoryController,
 };

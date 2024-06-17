@@ -53,6 +53,22 @@ const retrievesinglesubcategoryController = async (req, res, next) => {
     handleError(error.message);
   }
 };
+const deletesubcategoryController = async (req, res, next) => {
+  const { subcategoryid } = req.body;
+  try {
+    const cat = await subcategoryModel.findByIdAndDelete(subcategoryid);
+
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: cat,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message);
+  }
+};
 
 const retrieveallsubcategoryController = async (req, res, next) => {
     try {
@@ -72,43 +88,43 @@ const retrieveallsubcategoryController = async (req, res, next) => {
 };
 
 const updatesubcategoryController = async (req, res, next) => {
-  const { category_description, category, categoryid , categoryurls } = req.body;
-  const categoryname = category.toLowerCase();
-  try {
-      const cat = await CategoryModel.findOne({category:categoryname});
-    if (cat) {
-        if (cat.category != categoryname) {
-            return res.status(200).json({
-              status_code: 400,
-              status: true,
-              message: "category already exist",
-              error: "category already exist",
-            });
-          }
+    const {  category, subcategory  , subcategoryid} = req.body;
+    const ncategory = subcategory.toLowerCase();
+    // const sellercategory = await CategoryModel.findOne({
+    //   category: ncategory,
+    // });
+    //   if (sellercategory) {
+    //     return res.status(400).json({
+    //       status_code: 400,
+    //       status: false,
+    //       message: "category already exist",
+    //       error: "category already exist",
+    //     });
+    //   }
+  
+    try {
+      const form = await subcategoryModel.findByIdAndUpdate(subcategoryid, {
+        $set: {
+            category, subcategory : nsubcategory
+        },
+      });
+  
+      return res.status(200).json({
+        status_code: 200,
+        status: true,
+        message: "signup process successful",
+        data: trainee,
+      });
+    } catch (error) {
+      console.log(error);
+      handleError(error.message)(res);
     }
-
-    const data = {
-      category_description,
-      categoryname, categoryurls ,
-      categoryid,
-    };
-
-    let trainee = await updatecategoryModel(data, res);
-    return res.status(200).json({
-      status_code: 200,
-      status: true,
-      message: "signup process successful",
-      data: trainee,
-    });
-  } catch (error) {
-    console.log(error);
-    handleError(error.message);
-  }
-};
+  };
 
 module.exports = {
   createsubcategoryController,
   updatesubcategoryController,
+  deletesubcategoryController,
   retrieveallsubcategoryController,
   retrievesinglesubcategoryController,
 };

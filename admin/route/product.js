@@ -1,8 +1,8 @@
-const { createProductController, adminpublishproductController, retrieveallproductController, retrievesingleproductController } = require("../controller/product");
+const { createProductController, adminpublishproductController, retrieveallproductController, retrievesingleproductController, updateProductController } = require("../controller/product");
 const { admin_check_token } = require("../core/authorization");
 const { upload } = require("../core/upload");
 const { adminValidation } = require("../core/validation/auth");
-const { createProductValidation, retrieveallproductValidation, retrievesingleproductValidation } = require("../core/validation/product");
+const { createProductValidation, retrieveallproductValidation, retrievesingleproductValidation, updateProductValidation } = require("../core/validation/product");
 
 
 
@@ -14,6 +14,13 @@ router.post(
   createProductValidation,
   admin_check_token,
   createProductController
+);
+router.post(
+  "/update/product",
+  // upload.single('productfile'),
+  updateProductValidation,
+  admin_check_token,
+  updateProductController
 );
 // router.post(
 //   "/create/product",

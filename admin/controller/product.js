@@ -1,14 +1,13 @@
 const { ProductModel } = require("../core/db/product");
 const { handleError } = require("../core/utils");
-const path = require('path')
+const path = require("path");
 const {
   retrievesingleproductModel,
   blockproductModel,
   createProductModel,
   adminpublishproductModel,
+  updateProductModel,
 } = require("../model/product");
-
-
 
 const createProductController = async (req, res, next) => {
   const {
@@ -20,7 +19,8 @@ const createProductController = async (req, res, next) => {
     coverimage,
     quantity,
     subcategory,
-    variants,  recommended
+    variants,
+    recommended,
   } = req.body;
   const name = productname.toLowerCase();
   const price = productprice;
@@ -28,7 +28,6 @@ const createProductController = async (req, res, next) => {
   const description = productdescription;
 
   try {
-  
     const data = {
       name,
       price,
@@ -40,7 +39,8 @@ const createProductController = async (req, res, next) => {
       coverimage,
       quantity,
       subcategory,
-      variants,  recommended
+      variants,
+      recommended,
     };
 
     let trainee = await createProductModel(data, res);
@@ -55,60 +55,39 @@ const createProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
-
 const updateProductController = async (req, res, next) => {
   const {
     productname,
     category,
-    sellerid,
-    productid,
     productprice,
-
     productdescription,
     images,
-    isdiscount,
-    discount_price,
-    discount_startdate,
-    discount_enddate,
+    coverimage,
     quantity,
-    delivery_vehicle,
     subcategory,
     variants,
-    vehicle_fee,
-    productinfo,
-    about,
-    gallerydescription,
-    max_quantity,
-    min_quantity, productpublished
+    recommended,
+    productid,
   } = req.body;
   const name = productname.toLowerCase();
   const price = productprice;
-
   const description = productdescription;
+
   try {
     const data = {
       name,
       price,
-
-      images,
-      isdiscount,
-      discount_price,
-      discount_startdate,
-      discount_enddate,
-      description,
+      productname,
       category,
-      sellerid,
-      productid,
+      productprice,
+      description,
+      images,
+      coverimage,
       quantity,
-      delivery_vehicle,
       subcategory,
       variants,
-      vehicle_fee,
-      productinfo,
-      about,
-      gallerydescription,
-      max_quantity,
-      min_quantity, productpublished
+      recommended,
+      productid,
     };
 
     let trainee = await updateProductModel(data, res);
@@ -123,6 +102,7 @@ const updateProductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
 const adminpublishproductController = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -134,7 +114,7 @@ const adminpublishproductController = async (req, res, next) => {
     }
     //vaidating csv
     const ext = path.extname(req.file.originalname);
-    if (ext !== '.csv') {
+    if (ext !== ".csv") {
       return res.status(400).json({
         status_code: 400,
         status: false,
@@ -142,9 +122,9 @@ const adminpublishproductController = async (req, res, next) => {
       });
     }
     const filePath = req.file.path;
-    console.log('file' , filePath)
+    console.log("file", filePath);
     const data = {
-      filePath
+      filePath,
     };
 
     let trainee = await adminpublishproductModel(data, res);
@@ -205,17 +185,17 @@ const retrieveallproductController = async (req, res, next) => {
     const limit = 50;
     let skip = (page - 1) * limit;
     const products = await ProductModel.find()
-    .skip(skip) // skip documents
-    .limit(limit); // limit results per page
+      .skip(skip) // skip documents
+      .limit(limit); // limit results per page
 
-  // Get total count of documents for pagination
+    // Get total count of documents for pagination
     const totalDocuments = await ProductModel.countDocuments();
     const productdata = {
       products,
       currentPage: page,
       totalPages: Math.ceil(totalDocuments / limit),
-      totalItems: totalDocuments
-    }
+      totalItems: totalDocuments,
+    };
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -250,5 +230,7 @@ module.exports = {
   retrievesingleproductController,
   retrieveallproductController,
   // retrieveallproductreveiewController,
-  adminblockproductController,  createProductController ,  adminpublishproductController 
+  adminblockproductController,
+  createProductController,
+  adminpublishproductController,  updateProductController 
 };

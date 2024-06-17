@@ -16,7 +16,6 @@ const createcategoryValidation = (req, res, next) => {
   }
   return next();
 };
-
 const updatecategoryValidation = (req, res, next) => {
   const schema = joi.object({
     adminid: joi.string().required().length(24),
@@ -68,8 +67,8 @@ const updatesubcategoryValidation = (req, res, next) => {
   const schema = joi.object({
     adminid: joi.string().required().length(24),
     category: joi.string().required(),
-    categoryid: joi.string().required(),
-    categoryurl: joi.string().required(),
+    subcategory: joi.string().required(),
+    subcategoryid: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -84,7 +83,7 @@ const updatesubcategoryValidation = (req, res, next) => {
 const retrievedeletesubcategoryValidation = (req, res, next) => {
   const schema = joi.object({
     adminid: joi.string().required().length(24),
-    categoryid: joi.string().required(),
+    subcategoryid: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -116,4 +115,6 @@ module.exports = {
   updatecategoryValidation,
   createsubcategoryValidation,
   retrievecategorysubcategoryValidation,
+  retrievedeletesubcategoryValidation,
+  updatesubcategoryValidation,
 };
