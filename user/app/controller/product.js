@@ -24,6 +24,22 @@ const userretriveallproductController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const userretriveallcategoryproductController = async (req, res, next) => {
+  try {
+    const {subcategory} = req.body
+    
+    let comment = await ProductModel.find({subcategory})
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "product retrieved",
+      data: comment,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 const userretrivesingleproductController = async (req, res, next) => {
   try {
     const { productid } = req.body;
@@ -92,5 +108,5 @@ const userdashboardController = async (req, res, next) => {
 module.exports = {
   userretrivesingleproductController,
   userretriveallproductController,
-  userretrivecategoryController,  userdashboardController
+  userretrivecategoryController,  userdashboardController , userretriveallcategoryproductController 
 };

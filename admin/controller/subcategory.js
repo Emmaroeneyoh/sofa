@@ -86,6 +86,21 @@ const retrieveallsubcategoryController = async (req, res, next) => {
     handleError(error.message);
   }
 };
+const retrievesubcategoriesController = async (req, res, next) => {
+    try {
+    const cat = await subcategoryModel.find()
+
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: cat,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message);
+  }
+};
 
 const updatesubcategoryController = async (req, res, next) => {
     const {  category, subcategory  , subcategoryid} = req.body;
@@ -126,5 +141,5 @@ module.exports = {
   updatesubcategoryController,
   deletesubcategoryController,
   retrieveallsubcategoryController,
-  retrievesinglesubcategoryController,
+  retrievesinglesubcategoryController,   retrievesubcategoriesController
 };

@@ -9,6 +9,7 @@ const {
   retrieveallsubcategoryController,
   createsubcategoryController,
   deletesubcategoryController,
+  retrievesubcategoriesController,
 } = require("../controller/subcategory");
 const { admin_check_token } = require("../core/authorization");
 const { adminValidation } = require("../core/validation/auth");
@@ -81,6 +82,12 @@ router.post(
   retrievecategorysubcategoryValidation,
   admin_check_token,
   retrieveallsubcategoryController
+);
+router.post(
+  "/retrieve/all/subcategory",
+  adminValidation,
+  admin_check_token,
+  retrievesubcategoriesController
 );
 router.post(
   "/delete/subcategory",

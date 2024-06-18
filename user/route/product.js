@@ -1,5 +1,5 @@
 const { adminValidation } = require("../../admin/core/validation/auth");
-const { userretriveallproductController, userretrivesingleproductController, userretrivecategoryController, userdashboardController } = require("../app/controller/product");
+const { userretriveallproductController, userretrivesingleproductController, userretrivecategoryController, userdashboardController, userretriveallcategoryproductController } = require("../app/controller/product");
 const { user_check_token } = require("../core/authorization");
 const { userValidation } = require("../core/validation/auth");
 const { usersingleproductValidation } = require("../core/validation/product");
@@ -12,6 +12,10 @@ router.post(
   // userValidation,
   // user_check_token,
   userretriveallproductController
+);
+router.post(
+  "/retrieve/subcategory/product",
+  userretriveallcategoryproductController
 );
 router.post(
   "/retrieve/single/product",
